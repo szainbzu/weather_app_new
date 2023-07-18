@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -26,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
     private final String url = "http://api.openweathermap.org/data/2.5/weather";
     private final String code = "5c0df1570193de98d2da5b872e6dbec3";
     private EditText edtCity;
+    private RequestQueue queue;
     private TextView txtResult;
     private DecimalFormat df = new DecimalFormat("#.##");
     @Override
@@ -34,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         edtCity = findViewById(R.id.edtCity);
         txtResult = findViewById(R.id.txtResult);
+        queue = Volley.newRequestQueue(this);
     }
 
     public void btnShow_Click(View view) {
@@ -44,7 +47,6 @@ public class MainActivity extends AppCompatActivity {
         }
         else{
             String str = url+"?q=" + city + "&appid=" + code;
-            RequestQueue queue = Volley.newRequestQueue(this);
             StringRequest stringRequest = new StringRequest(Request.Method.GET, str,
                     new Response.Listener<String>() {
                         @Override
